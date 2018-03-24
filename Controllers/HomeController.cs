@@ -2,13 +2,13 @@
 
 namespace UnitParserAPI.Controllers
 {
-    public class HomeController : Controller
-    {
-        public ActionResult Index()
-        {
-            ViewBag.Title = "UnitParser Web API";
+	public class HomeController : Controller
+	{
+		public ActionResult Index()
+		{
+			ViewBag.Title = "UnitParser Web API";
 
-            return View();
-        }
-    }
+			return View();
+		}
+	}
 }

@@ -5,16 +5,16 @@ using UnitParserAPI.Services;
 
 namespace UnitParserAPI.Controllers
 {
-    public class ParserController : ApiController
-    {
-        private ParserService ParserService;
-        public ParserController() { ParserService = new ParserService(); }
+	public class ParserController : ApiController
+	{
+		private ParserService ParserService;
+		public ParserController() { ParserService = new ParserService(); }
 
-        [Route("xml")]
-        public HttpResponseMessage Get(string input)
-        {
+		[Route("xml")]
+		public HttpResponseMessage Get(string input)
+		{
 			return ParserService.GetParserOutput(input, new XmlMediaTypeFormatter());
-        }
+		}
 
 		[Route("json")]
 		public HttpResponseMessage Get(string input, bool placeholder = false)
