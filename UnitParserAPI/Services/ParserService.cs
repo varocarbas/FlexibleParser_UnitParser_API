@@ -40,28 +40,50 @@ namespace UnitParserAPI.Services
 			{
 				outDict.Add("Value and unit", unitP.ValueAndUnitString);
 				outDict.Add("Value", unitP.Value.ToString());
-				outDict.Add
-				(
-					"Unit prefix", 
-					(
-						unitP.UnitPrefix.Factor == 1m ? "None" : 
-						unitP.UnitPrefix.Name + " (" + unitP.UnitPrefix.Symbol + ")"
-					)
-				);
-				outDict.Add
-				(
-					"Unit", 
-					(
-						unitP.Unit == Units.None ? "None" :
-						unitP.Unit.ToString() + " (" + unitP.UnitString + ")"
-					)
-				);
+				outDict.Add("Unit prefix", GetUnitPrefixNameAndSymbol(unitP.UnitPrefix));
+				outDict.Add("Unit", GetUnitPrefixNameAndSymbol(unitP.Unit));
 				outDict.Add("Unit parts", GetUnitPartString(unitP));
 				outDict.Add("System of units", unitP.UnitSystem.ToString());
 				outDict.Add("Unit type", unitP.UnitType.ToString());
 			}
 
 			return outDict;
+		}
+
+		private string GetUnitPrefixName(Units unit)
+		{
+			return unit.ToString();
+		}
+
+		private string GetUnitPrefixSymbol(Units unit)
+		{
+			string output = null;
+			if (unit == Units.None) return output;
+
+			var strings = UnitP.GetStringsForUnit(unit);
+			if (strings != null && strings.Count > 0) { output = strings[0]; }
+
+			return output;
+		}
+
+		private string GetUnitPrefixName(Prefix prefix)
+		{
+			return prefix.Name.ToString();
+		}
+
+		private string GetUnitPrefixSymbol(Prefix prefix)
+		{
+			return (prefix.Factor == 1m ? null : prefix.Symbol.ToString());
+		}
+
+		private string GetUnitPrefixNameAndSymbol(dynamic unitOrPrefix)
+		{
+			string symbol = GetUnitPrefixSymbol(unitOrPrefix);
+
+			return 
+			(
+				GetUnitPrefixName(unitOrPrefix) + (symbol == null ? "" : " (" + symbol + ")")
+			);
 		}
 
 		private string GetUnitPartString(UnitP unitP)
