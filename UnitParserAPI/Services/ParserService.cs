@@ -72,7 +72,7 @@ namespace UnitParserAPI.Services
 			{
 				if (output != "") output += " * ";
 
-				if (part.Prefix.Factor != 1m) output += part.Prefix.Symbol;
+				if (part.Prefix.Factor != 1m) output += part.Prefix.Name;
 				output += part.Unit.ToString();
 				if (part.Exponent != 1m) output += part.Exponent.ToString();
 			}
