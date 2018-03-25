@@ -44,7 +44,7 @@ namespace UnitParserAPI.Services
 				outDict.Add("Unit", GetUnitPrefixNameAndSymbol(unitP.Unit));
 				outDict.Add("Unit parts", GetUnitPartString(unitP));
 				outDict.Add("System of units", unitP.UnitSystem.ToString());
-				outDict.Add("Unit type", unitP.UnitType.ToString().ToLower());
+				outDict.Add("Unit type", unitP.UnitType.ToString());
 			}
 
 			return outDict;
