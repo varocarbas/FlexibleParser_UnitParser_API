@@ -44,7 +44,7 @@ namespace UnitParserAPI.Services
 				outDict.Add("Unit", GetUnitPrefixNameAndSymbol(unitP.Unit));
 				outDict.Add("Unit parts", GetUnitPartString(unitP));
 				outDict.Add("System of units", unitP.UnitSystem.ToString());
-				outDict.Add("Unit type", unitP.UnitType.ToString());
+				outDict.Add("Unit type", unitP.UnitType.ToString().ToLower());
 			}
 
 			return outDict;
@@ -52,7 +52,12 @@ namespace UnitParserAPI.Services
 
 		private string GetUnitPrefixName(Units unit)
 		{
-			return unit.ToString();
+			return unit.ToString().ToLower();
+		}
+
+		private string GetUnitPrefixName(Prefix prefix)
+		{
+			return prefix.Name.ToString().ToLower();
 		}
 
 		private string GetUnitPrefixSymbol(Units unit)
@@ -64,11 +69,6 @@ namespace UnitParserAPI.Services
 			if (strings != null && strings.Count > 0) { output = strings[0]; }
 
 			return output;
-		}
-
-		private string GetUnitPrefixName(Prefix prefix)
-		{
-			return prefix.Name.ToString();
 		}
 
 		private string GetUnitPrefixSymbol(Prefix prefix)
@@ -92,11 +92,11 @@ namespace UnitParserAPI.Services
 
 			foreach (UnitPart part in unitP.UnitParts)
 			{
-				if (output != "") output += " * ";
+				if (output != "") output += ", ";
 
-				if (part.Prefix.Factor != 1m) output += part.Prefix.Name;
-				output += part.Unit.ToString();
-				if (part.Exponent != 1m) output += part.Exponent.ToString();
+				if (part.Prefix.Factor != 1m) output += part.Prefix.Name.ToLower();
+				output += part.Unit.ToString().ToLower();
+				if (part.Exponent != 1m) output += "^" + part.Exponent.ToString();
 			}
 
 			return output;
