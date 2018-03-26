@@ -97,7 +97,11 @@ namespace UnitParserAPI.Services
 
 			private static string GetUnitOrPrefixNameInternal(string input)
 			{
-				return (input == "None" ? input : input.ToLower());
+				return 
+				(
+					input == "None" || input == "Unitless" || 
+					input.Contains("Valid") ? input : input.ToLower()
+				);
 			}
 
 			private static string GetUnitOrPrefixSymbol(Units unit)
