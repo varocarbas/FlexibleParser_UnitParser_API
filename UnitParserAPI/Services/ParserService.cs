@@ -42,7 +42,15 @@ namespace UnitParserAPI.Services
 				outDict.Add("Unit prefix", StringRepresentations.GetIndividualUnitOrPrefix(unitP.UnitPrefix));
 				outDict.Add("Unit", StringRepresentations.GetIndividualUnitOrPrefix(unitP.Unit));
 				outDict.Add("Unit parts", StringRepresentations.GetUnitParts(unitP));
-				outDict.Add("System of units", unitP.UnitSystem.ToString());
+				outDict.Add
+				(
+					"System of units", 
+					(
+						unitP.Unit == Units.None || unitP.Unit == Units.Unitless ? 
+						UnitSystems.None : unitP.UnitSystem
+					)
+					.ToString()
+				);
 				outDict.Add("Unit type", unitP.UnitType.ToString());
 			}
 
@@ -61,11 +69,17 @@ namespace UnitParserAPI.Services
 
 			public static string GetIndividualUnitOrPrefix(dynamic unitOrPrefix)
 			{
+				string outString = "";
+				if (unitOrPrefix.GetType() == typeof(Prefix) && unitOrPrefix.Factor != 1m)
+				{
+					outString = unitOrPrefix.Factor.ToString() + " ";
+				}
+
 				string symbol = GetUnitOrPrefixSymbol(unitOrPrefix);
 
 				return
 				(
-					GetUnitOrPrefixName(unitOrPrefix) + (symbol == null ? "" : " (" + symbol + ")")
+					outString + GetUnitOrPrefixName(unitOrPrefix) + (symbol == null ? "" : " (" + symbol + ")")
 				);
 			}
 
