@@ -10,7 +10,7 @@ namespace UnitParserAPI.Controllers
         private ParserService ParserService;
         public ParserController() { ParserService = new ParserService(); }
 
-        [Route("xml")]
+		[Route("xml")]
         public HttpResponseMessage Get(string input)
         {
 			return ParserService.GetParserOutput(input, new XmlMediaTypeFormatter());
