@@ -39,8 +39,8 @@ namespace UnitParserAPI.Services
 			{
 				outDict.Add("Value and unit", unitP.ValueAndUnitString);
 				outDict.Add("Value", unitP.Value.ToString());
-				outDict.Add("Unit prefix", StringRepresentations.GetUnitOrPrefix(unitP.UnitPrefix));
-				outDict.Add("Unit", StringRepresentations.GetUnitOrPrefix(unitP.Unit));
+				outDict.Add("Unit prefix", StringRepresentations.GetIndividualUnitOrPrefix(unitP.UnitPrefix));
+				outDict.Add("Unit", StringRepresentations.GetIndividualUnitOrPrefix(unitP.Unit));
 				outDict.Add("Unit parts", StringRepresentations.GetUnitParts(unitP));
 				outDict.Add("System of units", unitP.UnitSystem.ToString());
 				outDict.Add("Unit type", unitP.UnitType.ToString());
@@ -59,13 +59,13 @@ namespace UnitParserAPI.Services
 			//- Each unit part is represented by [prefix name (if applicable)][unit name][^exponent (if different than 1)]. 
 			//- Any other string is shown as returned by UnitParser.
 
-			public static string GetUnitOrPrefix(dynamic unitOrPrefix)
+			public static string GetIndividualUnitOrPrefix(dynamic unitOrPrefix)
 			{
-				string symbol = GetUnitPrefixSymbol(unitOrPrefix);
+				string symbol = GetUnitOrPrefixSymbol(unitOrPrefix);
 
 				return
 				(
-					GetUnitPrefixName(unitOrPrefix) + (symbol == null ? "" : " (" + symbol + ")")
+					GetUnitOrPrefixName(unitOrPrefix) + (symbol == null ? "" : " (" + symbol + ")")
 				);
 			}
 
@@ -77,30 +77,30 @@ namespace UnitParserAPI.Services
 				{
 					if (output != "") output += ", ";
 
-					if (part.Prefix.Factor != 1m) output += part.Prefix.Name.ToLower();
-					output += part.Unit.ToString().ToLower();
+					if (part.Prefix.Factor != 1m) output += GetUnitOrPrefixName(part.Prefix);
+					output += GetUnitOrPrefixName(part.Unit);
 					if (part.Exponent != 1m) output += "^" + part.Exponent.ToString();
 				}
 
 				return output;
 			}
 
-			private static string GetUnitPrefixName(Units unit)
+			private static string GetUnitOrPrefixName(Units unit)
 			{
-				return GetUnitPrefixNameInternal(unit.ToString());
+				return GetUnitOrPrefixNameInternal(unit.ToString());
 			}
 
-			private static string GetUnitPrefixName(Prefix prefix)
+			private static string GetUnitOrPrefixName(Prefix prefix)
 			{
-				return GetUnitPrefixNameInternal(prefix.Name.ToString());
+				return GetUnitOrPrefixNameInternal(prefix.Name.ToString());
 			}
 
-			private static string GetUnitPrefixNameInternal(string input)
+			private static string GetUnitOrPrefixNameInternal(string input)
 			{
 				return (input == "None" ? input : input.ToLower());
 			}
 
-			private static string GetUnitPrefixSymbol(Units unit)
+			private static string GetUnitOrPrefixSymbol(Units unit)
 			{
 				string output = null;
 				if (unit == Units.None) return output;
@@ -111,7 +111,7 @@ namespace UnitParserAPI.Services
 				return output;
 			}
 
-			private static string GetUnitPrefixSymbol(Prefix prefix)
+			private static string GetUnitOrPrefixSymbol(Prefix prefix)
 			{
 				return (prefix.Factor == 1m ? null : prefix.Symbol.ToString());
 			}
