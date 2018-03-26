@@ -71,6 +71,7 @@ namespace UnitParserAPI.Services
 
 			public static string GetUnitParts(UnitP unitP)
 			{
+				if (unitP.UnitParts.Count == 0) { return GetUnitOrPrefixName(unitP.Unit); }
 				string output = "";
 
 				foreach (UnitPart part in unitP.UnitParts)
