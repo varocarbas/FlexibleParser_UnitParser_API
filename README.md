@@ -2,7 +2,7 @@
 
 C# code of the web API delivering the main parsing functionalities of [UnitParser](https://customsolvers.com/unit_parser/), first part of [FlexibleParser](https://customsolvers.com/flexible_parser/).
 
-You can visit its [main page](https://unitparser.azurewebsites.net/) or start using its endpoints right away: [XML](https://unitparser.azurewebsites.net/xml?input=your_input_here) and [JSON](https://unitparser.azurewebsites.net/json?input=your_input_here). 
+You can visit its [main page](http://unitparser.eu-west-2.elasticbeanstalk.com/) or start using its endpoints right away: [XML](http://unitparser.eu-west-2.elasticbeanstalk.com/xml?input=your_input_here) and [JSON](http://unitparser.eu-west-2.elasticbeanstalk.com/json?input=your_input_here). 
 
 ## Authorship & Copyright
 
